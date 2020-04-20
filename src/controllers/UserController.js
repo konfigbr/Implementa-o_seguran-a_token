@@ -15,15 +15,17 @@ module.exports = {
                                      .where('name',username)
                                      .andWhere('password',pass)
                                      .first();
+       
 
         /*Se o usuário não for localizado, retorno mensagem de erro, 
         caso contrário válido usuário e senha e atribuo um token*/
         if(!user){
             return res.status(500).send({error: 'Login Inválido !',auth: false, token: null })
-        } else {           
+        } else {
+            const id = user.id; //retorno este id único dentro do token           
             if (username === user.name && pass === user.password){
-                const acessToken = jwt.sign({ user }, process.env.SECRET,{expiresIn: 6000});
-                return res.status(200).send({ auth: true, token: acessToken});
+                const acessToken = jwt.sign({ id }, process.env.SECRET,{expiresIn: 6000});
+                return res.status(200).send({  auth: true, token: acessToken});
             }
                return res.status(500).send({ auth: false, token: null });      
         }       

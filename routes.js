@@ -2,7 +2,7 @@ const express = require('express')
 const UserController = require('./src/controllers/UserController')
 const GatosController = require('./src/controllers/GatosController')
 const routes = express.Router();
-const auth = require('./src/auth/auth');
+const auth = require('./src/middlewares/auth');
 
 routes.post('/login',UserController.create);
 
